@@ -1,8 +1,10 @@
 window.STORY_DATA = {
   "meta": {
     "title": "泰康故事库仪表盘",
-    "sourceFile": "泰康故事库_v260401.xlsx",
-    "generatedAt": "2026-04-01T03:16:22.007530+00:00",
+    "sourceFile": "泰康故事库工作版",
+    "sourceFilename": "泰康故事库_v260401.xlsx",
+    "lastModifiedAt": "2026-04-01T03:07:02.935140+00:00",
+    "generatedAt": "2026-04-01T05:18:08.160351+00:00",
     "targetDate": "2026-08-22",
     "totalStories": 31,
     "keyStories": 0

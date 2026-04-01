@@ -142,6 +142,11 @@ def parse_args():
         default=str(DEFAULT_OUTPUT_JS),
         help="输出的 story-data.js 路径",
     )
+    parser.add_argument(
+        "--display-name",
+        default=None,
+        help="页面中显示的数据来源名称，默认使用 Excel 文件名",
+    )
     return parser.parse_args()
 
 
@@ -149,6 +154,10 @@ def main():
     args = parse_args()
     source_xlsx = Path(args.source).expanduser().resolve()
     output_js = Path(args.output).expanduser().resolve()
+    source_display_name = args.display_name or source_xlsx.name
+    source_modified_at = datetime.fromtimestamp(
+        source_xlsx.stat().st_mtime, tz=timezone.utc
+    ).isoformat()
 
     stories = load_sheet_rows(source_xlsx, "故事库主表")
 
@@ -182,7 +191,9 @@ def main():
     payload = {
         "meta": {
             "title": "泰康故事库仪表盘",
-            "sourceFile": source_xlsx.name,
+            "sourceFile": source_display_name,
+            "sourceFilename": source_xlsx.name,
+            "lastModifiedAt": source_modified_at,
             "generatedAt": datetime.now(timezone.utc).isoformat(),
             "targetDate": TARGET_DATE,
             "totalStories": len(enriched_stories),

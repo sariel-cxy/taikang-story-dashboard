@@ -9,6 +9,7 @@
 - `assets/styles.css`: 页面样式
 - `assets/app.js`: 仪表盘交互逻辑
 - `assets/story-cards.js`: 故事卡页面交互逻辑
+- `scripts/update_site_data.sh`: 一键更新网页数据
 - `scripts/export_excel.py`: 从 Excel 导出前端数据
 - `scripts/build_optimized_workbook.py`: 生成持续入库模板
 - `scripts/audit_publication.py`: 发布前检查数据是否适合公开
@@ -18,19 +19,27 @@
 
 ## 如何更新数据
 
-1. 直接运行：
+优先使用一键脚本：
 
 ```bash
-python3 scripts/export_excel.py
+./scripts/update_site_data.sh
 ```
 
 如果 Excel 文件名或路径变了，可以显式指定：
 
 ```bash
-python3 scripts/export_excel.py '/你的/Excel路径.xlsx'
+./scripts/update_site_data.sh '/你的/Excel路径.xlsx'
 ```
 
-2. 直接双击打开 `index.html`，或放到任意静态服务器发布。
+如果你想自定义页面里的“数据来源”显示名，可以传第二个参数：
+
+```bash
+./scripts/update_site_data.sh '/你的/Excel路径.xlsx' '泰康故事库工作版'
+```
+
+它内部会自动调用 `scripts/export_excel.py`，并刷新 `data/story-data.js`。
+
+然后直接双击打开 `index.html`，或把改动提交到 GitHub Pages。
 
 ## 如何生成持续入库模板
 
@@ -117,7 +126,7 @@ https://你的GitHub用户名.github.io/taikang-story-dashboard/
 2. 运行：
 
 ```bash
-python3 scripts/export_excel.py '/你的/Excel路径.xlsx'
+./scripts/update_site_data.sh '/你的/Excel路径.xlsx'
 ```
 
 3. 把更新后的 `data/story-data.js` 连同其他改动一起提交到 GitHub

@@ -347,7 +347,9 @@
 
   function renderMeta() {
     elements.sourceFile.textContent = data.meta.sourceFile;
-    elements.generatedAt.textContent = formatDate(data.meta.generatedAt);
+    elements.generatedAt.textContent = formatDate(
+      data.meta.lastModifiedAt || data.meta.generatedAt
+    );
   }
 
   function render() {
