@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>泰康故事卡</title>
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero hero-compact">
+        <div class="hero-copy">
+          <p class="eyebrow">TaiKang Story Cards</p>
+          <h1>泰康故事卡</h1>
+          <p class="hero-text">按故事库主表生成的明细卡片，适合汇报引用、逐条查看和深度检索。</p>
+        </div>
+        <div class="hero-meta card">
+          <p class="meta-label">快速返回</p>
+          <p class="meta-value"><a class="inline-link" href="./index.html">返回仪表盘首页</a></p>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">故事卡</p>
+              <h2>故事明细</h2>
+            </div>
+            <div class="tag-toolbar">
+              <p class="toolbar-note" id="tag-export-status">当前没有网页侧标签变更</p>
+              <div class="toolbar-actions">
+                <button class="ghost-button" id="clear-tag-overrides" type="button">清空网页侧标签</button>
+                <button class="ghost-button" id="export-tag-overrides" type="button">导出标签变更 CSV</button>
+              </div>
+            </div>
+          </div>
+          <div id="story-cards-list" class="story-cards-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./data/story-data.js"></script>
+    <script src="./assets/story-cards.js"></script>
+  </body>
+</html>

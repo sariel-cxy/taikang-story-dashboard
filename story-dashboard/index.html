@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>泰康故事库仪表盘</title>
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">TaiKang Story Dashboard</p>
+          <h1>泰康故事库仪表盘</h1>
+          <p class="hero-text">
+            用于汇报、检索和快速浏览故事资产。核心指标、筛选结果和图表会跟随数据源自动更新。
+          </p>
+        </div>
+        <div class="hero-meta card">
+          <p class="meta-label">数据来源</p>
+          <p class="meta-value" id="source-file">-</p>
+          <p class="meta-label">最近生成</p>
+          <p class="meta-value" id="generated-at">-</p>
+        </div>
+      </header>
+
+      <main class="layout">
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">核心数据指标</p>
+              <h2>首页仪表盘</h2>
+            </div>
+          </div>
+          <div class="metrics-grid">
+            <article class="metric-card">
+              <p class="metric-label">故事库总条数</p>
+              <p class="metric-value" id="metric-total">0</p>
+              <p class="metric-footnote">当前筛选结果会同步显示在下方列表与图表中。</p>
+            </article>
+            <article class="metric-card accent-card">
+              <p class="metric-label">距 30 周年还有</p>
+              <p class="metric-value" id="metric-countdown">0</p>
+              <p class="metric-footnote">目标日期：2026 年 8 月 22 日</p>
+            </article>
+            <article class="metric-card">
+              <p class="metric-label">30 周年重点故事条数</p>
+              <p class="metric-value" id="metric-key-stories">0</p>
+              <p class="metric-footnote">兼容“是/否、Y/N、1/0”等标记方式。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">检索</p>
+              <h2>多标签筛选 + 关键词搜索</h2>
+            </div>
+            <button class="ghost-button" id="reset-filters" type="button">重置筛选</button>
+          </div>
+          <div class="filters-grid" id="filters-grid"></div>
+          <label class="search-box" for="keyword-input">
+            <span>关键词搜索</span>
+            <input
+              id="keyword-input"
+              type="search"
+              placeholder="支持搜索标题、摘要、金句、背景、核心情节、地点等字段"
+            />
+          </label>
+          <div class="result-bar">
+            <p id="result-summary">共 0 条</p>
+          </div>
+        </section>
+
+        <section class="panel strategy-ring-panel">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">战略概念圈</p>
+              <h2>战略概念圈</h2>
+            </div>
+          </div>
+          <div class="strategy-ring-wrap">
+            <svg class="strategy-ring-svg" viewBox="0 0 680 480" xmlns="http://www.w3.org/2000/svg" aria-label="泰康战略概念圈">
+              <defs>
+                <marker id="strategy-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M2 1L8 5L2 9" fill="none" stroke="var(--ring-line)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </marker>
+              </defs>
+
+              <rect class="ring-age" x="40" y="30" width="600" height="72" rx="14"/>
+              <text class="ring-age-title" x="340" y="58" text-anchor="middle" dominant-baseline="central">长寿时代</text>
+              <text class="ring-age-sub" x="340" y="82" text-anchor="middle" dominant-baseline="central">时代判断</text>
+
+              <line x1="340" y1="102" x2="340" y2="128" stroke="var(--ring-line)" stroke-width="1.2" marker-end="url(#strategy-arrow)" opacity="0.45"/>
+
+              <rect class="ring-shell" x="70" y="130" width="540" height="186" rx="12" fill="none"/>
+              <text class="ring-shell-label" x="84" y="148" dominant-baseline="central">业务层</text>
+
+              <rect class="ring-care" x="86" y="158" width="156" height="136" rx="10"/>
+              <text class="ring-care-title" x="164" y="216" text-anchor="middle" dominant-baseline="central">医养康宁</text>
+              <text class="ring-care-sub" x="164" y="238" text-anchor="middle" dominant-baseline="central">服务生态</text>
+
+              <rect class="ring-insurance" x="262" y="158" width="156" height="136" rx="10"/>
+              <text class="ring-insurance-title" x="340" y="216" text-anchor="middle" dominant-baseline="central">新寿险</text>
+              <text class="ring-insurance-sub" x="340" y="238" text-anchor="middle" dominant-baseline="central">业务战略</text>
+
+              <rect class="ring-synergy" x="438" y="158" width="156" height="136" rx="10"/>
+              <text class="ring-synergy-title" x="516" y="216" text-anchor="middle" dominant-baseline="central">三端协同</text>
+              <text class="ring-synergy-sub" x="516" y="238" text-anchor="middle" dominant-baseline="central">运行机制</text>
+
+              <line x1="242" y1="226" x2="262" y2="226" stroke="var(--ring-line)" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.4"/>
+              <line x1="418" y1="226" x2="438" y2="226" stroke="var(--ring-line)" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.4"/>
+              <line x1="340" y1="318" x2="340" y2="358" stroke="var(--ring-line)" stroke-width="1.2" marker-end="url(#strategy-arrow)" opacity="0.45"/>
+
+              <rect class="ring-ground" x="86" y="360" width="508" height="60" rx="10"/>
+              <text class="ring-ground-title" x="340" y="382" text-anchor="middle" dominant-baseline="central">养老 / 健康 / 财富管理</text>
+              <text class="ring-ground-sub" x="340" y="404" text-anchor="middle" dominant-baseline="central">落到客户全生命周期</text>
+            </svg>
+          </div>
+        </section>
+
+        <section class="analysis-layout">
+          <article class="panel">
+            <div class="section-head">
+              <div>
+                <p class="section-kicker">图表</p>
+                <h2>战略概念分布</h2>
+              </div>
+            </div>
+            <div class="chart-stack">
+              <div class="chart-card">
+                <div id="strategic-bar-chart" class="bar-chart"></div>
+              </div>
+              <div class="chart-card">
+                <div id="strategic-pie-chart" class="pie-chart"></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="section-head">
+              <div>
+                <p class="section-kicker">图表</p>
+                <h2>地点分布 Top 10</h2>
+              </div>
+            </div>
+            <div class="chart-card">
+              <h3>地点统计</h3>
+              <div id="location-bar-chart" class="bar-chart"></div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="section-head">
+              <div>
+                <p class="section-kicker">图表</p>
+                <h2>业务板块分布</h2>
+              </div>
+            </div>
+            <div class="chart-card">
+              <h3>二级标签（业务板块）</h3>
+              <div id="business-bar-chart" class="bar-chart"></div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="section-head">
+              <div>
+                <p class="section-kicker">图表</p>
+                <h2>八大关系分布</h2>
+              </div>
+            </div>
+            <div class="chart-card">
+              <h3>三级标签（八大关系）</h3>
+              <div id="relation-bar-chart" class="bar-chart"></div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="section-head">
+              <div>
+                <p class="section-kicker">图表</p>
+                <h2>主角角色分布</h2>
+              </div>
+            </div>
+            <div class="chart-card">
+              <h3>主角角色</h3>
+              <div id="role-bar-chart" class="bar-chart"></div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="section-head">
+              <div>
+                <p class="section-kicker">图表</p>
+                <h2>时间分布</h2>
+              </div>
+            </div>
+            <div class="chart-stack">
+              <div class="chart-card">
+                <h3>互斥年份分组柱状图</h3>
+                <div id="time-bar-chart" class="bar-chart"></div>
+              </div>
+              <div class="chart-card">
+                <h3>互斥年份分组环形图</h3>
+                <div id="time-pie-chart" class="pie-chart"></div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">结果</p>
+              <h2>故事列表</h2>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>编号</th>
+                  <th>故事标题</th>
+                  <th>战略概念</th>
+                  <th>业务板块</th>
+                  <th>八大关系</th>
+                  <th>主角角色</th>
+                  <th>价值观标签</th>
+                  <th>地点</th>
+                </tr>
+              </thead>
+              <tbody id="story-table-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./data/story-data.js"></script>
+    <script src="./assets/app.js"></script>
+  </body>
+</html>
