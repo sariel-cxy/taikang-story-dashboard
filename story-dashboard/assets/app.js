@@ -6,7 +6,7 @@
 
   const LOCAL_TAG_KEY = "taikang-story-tag-overrides-v1";
   const FILTER_LABELS = {
-    "一级标签（战略概念）": "战略概念",
+    "一级标签（战略概念）": "总领概念",
     "二级标签（业务板块）": "业务板块",
     "三级标签（八大关系）": "八大关系",
     "主角角色": "主角角色",

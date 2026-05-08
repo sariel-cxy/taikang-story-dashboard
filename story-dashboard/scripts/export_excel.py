@@ -29,6 +29,7 @@ SEARCH_FIELDS = [
     "关键转折/细节",
     "结果/影响",
     "价值意义/传播价值",
+    "原文",
     "关键人物名称",
     "地点",
     "细分地点",
@@ -42,6 +43,10 @@ FILTER_FIELDS = [
     "价值观标签",
     "是否30周年重点故事",
 ]
+
+FIELD_ALIASES = {
+    "一级标签（战略概念）": ["一级标签（战略概念）", "一级标签（总领概念）"],
+}
 
 
 def read_shared_strings(archive):
@@ -129,6 +134,24 @@ def normalize_flag(value):
     return normalized in {"是", "y", "yes", "true", "1", "重点", "已标记"}
 
 
+def canonicalize_story(record):
+    canonical = dict(record)
+    for target_field, source_fields in FIELD_ALIASES.items():
+        for source_field in source_fields:
+            value = record.get(source_field, "")
+            if value:
+                canonical[target_field] = value
+                break
+        else:
+            canonical.setdefault(target_field, "")
+
+    for source_fields in FIELD_ALIASES.values():
+        for source_field in source_fields[1:]:
+            canonical.pop(source_field, None)
+
+    return canonical
+
+
 def to_chart_rows(counter, limit=None):
     items = counter.most_common(limit)
     return [{"label": key, "value": value} for key, value in items]
@@ -150,7 +173,7 @@ def main():
     source_xlsx = Path(args.source).expanduser().resolve()
     output_js = Path(args.output).expanduser().resolve()
 
-    stories = load_sheet_rows(source_xlsx, "故事库主表")
+    stories = [canonicalize_story(story) for story in load_sheet_rows(source_xlsx, "故事库主表")]
 
     enriched_stories = []
     for story in stories:

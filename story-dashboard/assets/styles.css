@@ -637,6 +637,24 @@ tbody tr:hover {
   color: var(--brand);
 }
 
+.story-original-block {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(17, 75, 95, 0.03);
+  padding: 10px 12px;
+}
+
+.story-original-block summary {
+  cursor: pointer;
+  color: var(--brand-deep);
+  font-size: 0.92rem;
+}
+
+.story-original-text {
+  margin-top: 10px;
+  font-size: 0.95rem;
+}
+
 .empty-state {
   padding: 24px 0;
   text-align: center;

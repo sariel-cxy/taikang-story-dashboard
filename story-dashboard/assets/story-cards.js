@@ -39,6 +39,7 @@
     ["来源标题", true],
     ["来源类型", false],
     ["来源链接", true],
+    ["原文", true],
     ["故事提供者", false],
     ["首次发布时间", false],
     ["备注", true],
@@ -95,6 +96,18 @@
         <div class="story-field ${spanTwo ? "span-2" : ""}">
           <p class="story-field-label">${escapeHtml(label)}</p>
           <p class="story-field-value"><a class="story-source-link" href="${escapeHtml(value)}" target="_blank" rel="noreferrer">打开原始链接</a></p>
+        </div>
+      `;
+    }
+
+    if (label === "原文") {
+      return `
+        <div class="story-field ${spanTwo ? "span-2" : ""}">
+          <p class="story-field-label">${escapeHtml(label)}</p>
+          <details class="story-original-block">
+            <summary>展开原文</summary>
+            <div class="story-field-value story-original-text">${escapeHtml(value)}</div>
+          </details>
         </div>
       `;
     }
