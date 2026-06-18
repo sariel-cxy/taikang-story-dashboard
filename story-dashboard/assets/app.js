@@ -74,6 +74,7 @@
 
   function normalizeSearchText(story) {
     const fields = [
+      "编号",
       "故事标题",
       "故事摘要",
       "金句",
@@ -386,7 +387,9 @@
 
   function renderMeta() {
     elements.sourceFile.textContent = data.meta.sourceFile;
-    elements.generatedAt.textContent = formatDate(data.meta.generatedAt);
+    elements.generatedAt.textContent = formatDate(
+      data.meta.lastModifiedAt || data.meta.generatedAt
+    );
   }
 
   function render() {

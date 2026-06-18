@@ -74,6 +74,7 @@
 
   function normalizeSearchText(story) {
     const fields = [
+      "编号",
       "故事标题",
       "故事摘要",
       "金句",
