@@ -61,6 +61,17 @@
     return String(value || "").trim();
   }
 
+  function splitTagValue(value) {
+    return normalizeTagValue(value)
+      .split(/\s*\/\s*|、|，|,|；|;/)
+      .map((tag) => tag.trim())
+      .filter((tag) => tag && tag !== "0");
+  }
+
+  function roleDisplayLabel(value) {
+    return value === "HWP" ? "HWP（健康财富规划师）" : value;
+  }
+
   function normalizeSearchText(story) {
     const fields = [
       "故事标题",
@@ -101,10 +112,7 @@
     data.filters.fields.forEach((field) => {
       const values = new Set();
       stories.forEach((story) => {
-        const value = normalizeTagValue(story[field]);
-        if (value) {
-          values.add(value);
-        }
+        splitTagValue(story[field]).forEach((value) => values.add(value));
       });
       if (field === "是否30周年重点故事") {
         values.add("是");
@@ -188,7 +196,7 @@
         if (!selected) {
           return true;
         }
-        return normalizeTagValue(story[field]) === selected;
+        return splitTagValue(story[field]).includes(selected);
       });
 
       if (!matchesFilters) {
@@ -202,11 +210,27 @@
   function countByField(stories, field, limit) {
     const counts = new Map();
     stories.forEach((story) => {
-      const key = normalizeTagValue(story[field]);
-      if (!key) {
-        return;
-      }
-      counts.set(key, (counts.get(key) || 0) + 1);
+      splitTagValue(story[field]).forEach((key) => {
+        counts.set(key, (counts.get(key) || 0) + 1);
+      });
+    });
+
+    return [...counts.entries()]
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "zh-CN"))
+      .slice(0, limit)
+      .map(([label, value]) => ({ label, value }));
+  }
+
+  function countRoleCoverage(stories, limit) {
+    const counts = new Map();
+    stories.forEach((story) => {
+      const roles = new Set([
+        ...splitTagValue(story["主角角色"]),
+        ...splitTagValue(story["协同角色"]),
+      ].map(roleDisplayLabel));
+      roles.forEach((role) => {
+        counts.set(role, (counts.get(role) || 0) + 1);
+      });
     });
 
     return [...counts.entries()]
@@ -339,7 +363,7 @@
     renderBarChart(elements.locationBarChart, countByField(stories, "地点", 10), "location");
     renderBarChart(elements.businessBarChart, countByField(stories, "二级标签（业务板块）"));
     renderBarChart(elements.relationBarChart, countByField(stories, "三级标签（八大关系）"));
-    renderBarChart(elements.roleBarChart, countByField(stories, "主角角色"));
+    renderBarChart(elements.roleBarChart, countRoleCoverage(stories));
     const timeRows = countTimeBuckets(stories);
     renderBarChart(elements.timeBarChart, timeRows, "fixed");
     renderPieChart(elements.timePieChart, timeRows);
