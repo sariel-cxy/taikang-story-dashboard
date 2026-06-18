@@ -160,6 +160,21 @@
     return match ? Number(match[0]) : null;
   }
 
+  function normalizeStoryId(value) {
+    return normalizeTagValue(value).toLowerCase().replace(/[^a-z0-9]/g, "");
+  }
+
+  function matchesStoryId(story, keyword) {
+    const normalizedKeyword = normalizeStoryId(keyword);
+    if (!normalizedKeyword) {
+      return false;
+    }
+    const storyId = normalizeStoryId(story["编号"]);
+    const numericId = storyId.replace(/^tk/, "").replace(/^0+/, "") || "0";
+    const numericKeyword = normalizedKeyword.replace(/^tk/, "").replace(/^0+/, "") || "0";
+    return storyId === normalizedKeyword || storyId.endsWith(normalizedKeyword) || numericId === numericKeyword;
+  }
+
   function renderFilters() {
     elements.filtersGrid.innerHTML = "";
     data.filters.fields.forEach((field) => {
@@ -203,7 +218,7 @@
         return false;
       }
 
-      return !keyword || (story.__searchText || "").includes(keyword);
+      return !keyword || matchesStoryId(story, keyword) || (story.__searchText || "").includes(keyword);
     });
   }
 
