@@ -1,8 +1,8 @@
 window.STORY_DATA = {
   "meta": {
     "title": "泰康故事库仪表盘",
-    "sourceFile": "泰康故事库主表_260612_改标签.xlsx",
-    "sourceFilename": "泰康故事库主表_260612_改标签.xlsx",
+    "sourceFile": "泰康故事库主表_260618.xlsx",
+    "sourceFilename": "泰康故事库主表_260618.xlsx",
     "lastModifiedAt": "2026-06-18T09:16:07.762762+00:00",
     "generatedAt": "2026-06-18T09:33:46.060680+00:00",
     "targetDate": "2026-08-22",
